@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project PO Automation System | Metro AutoMation</title>
+  <meta name="description" content="ระบบบริหารงานตั้งแต่ปิดการขาย ผลิต ขนส่ง หน้างาน วางบิล จนถึงส่งมอบ สำหรับธุรกิจรับเหมาก่อสร้าง" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #0a1628;
+      --secondary: #0d2244;
+      --accent: #1e6fff;
+      --accent-2: #00c6ff;
+      --accent-3: #ff6b35;
+      --accent-gold: #f4c842;
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255,255,255,0.75);
+      --text-muted: rgba(255,255,255,0.45);
+      --glass: rgba(255,255,255,0.06);
+      --glass-border: rgba(255,255,255,0.12);
+      --success: #00e5a0;
+      --warning: #ffa726;
+      --danger: #ff5252;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans Thai', 'Inter', sans-serif;
+      background: #050d1a;
+      color: var(--text-primary);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    #pres-shell {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(30,111,255,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(0,198,255,0.06) 0%, transparent 55%),
+        #050d1a;
+    }
+
+    #slide-viewport {
+      width: 1280px;
+      height: 720px;
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(30,111,255,0.3),
+        0 40px 120px rgba(0,0,0,0.8),
+        0 0 80px rgba(30,111,255,0.15);
+      transform-origin: center center;
+    }
+
+    .slides-track {
+      display: flex;
+      width: calc(1280px * 11);
+      height: 720px;
+      transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .slide {
+      width: 1280px;
+      height: 720px;
+      flex-shrink: 0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 52px 64px;
+      overflow: hidden;
+    }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      z-index: 0;
+    }
+
+    .slide-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(30,111,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30,111,255,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 0;
+      mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+    }
+
+    .slide > * { position: relative; z-index: 1; }
+
+    /* SLIDE 1 */
+    #slide-1::before { background: linear-gradient(145deg, #050d1a 0%, #0a1628 40%, #0d2244 100%); }
+
+    #slide-1 .hero-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(30,111,255,0.25) 0%, rgba(0,198,255,0.1) 40%, transparent 70%);
+      top: -200px; right: -150px; z-index: 0;
+      animation: pulsate 6s ease-in-out infinite;
+    }
+
+    @keyframes pulsate {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+
+    .title-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(30,111,255,0.15); border: 1px solid rgba(30,111,255,0.35);
+      border-radius: 100px; padding: 6px 16px;
+      font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--accent-2); margin-bottom: 28px; width: fit-content;
+    }
+
+    .title-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent-2); animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+    #slide-1 h1 {
+      font-size: 52px; font-weight: 900; line-height: 1.1; letter-spacing: -1px;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.85) 50%, var(--accent-2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 16px; max-width: 640px;
+    }
+
+    .subtitle-thai {
+      font-size: 19px; color: var(--text-secondary); font-weight: 400;
+      margin-bottom: 44px; max-width: 560px; line-height: 1.6;
+    }
+
+    .pill-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
+
+    .pill {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 100px; padding: 10px 20px;
+      font-size: 13.5px; font-weight: 500; color: var(--text-secondary);
+      backdrop-filter: blur(12px);
+    }
+
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 50%, var(--accent) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    .company-logo {
+      position: absolute; bottom: 36px; right: 64px;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+    }
+    .logo-name {
+      font-size: 15px; font-weight: 700; letter-spacing: 1px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .logo-sub { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; }
+
+    .hexagon-grid {
+      position: absolute; right: 64px; top: 50%; transform: translateY(-50%);
+      width: 320px; height: 320px;
+    }
+
+    .hex-item {
+      position: absolute; width: 90px; height: 90px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border-radius: 16px; background: var(--glass); border: 1px solid var(--glass-border);
+      backdrop-filter: blur(16px); gap: 4px;
+      font-size: 12px; font-weight: 600; color: var(--text-secondary);
+    }
+    .hex-item .icon { font-size: 26px; }
+    .hex-item:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); background: rgba(30,111,255,0.15); border-color: rgba(30,111,255,0.3); }
+    .hex-item:nth-child(2) { top: 115px; left: 0; background: rgba(0,229,160,0.1); border-color: rgba(0,229,160,0.25); }
+    .hex-item:nth-child(3) { top: 115px; right: 0; background: rgba(0,198,255,0.1); border-color: rgba(0,198,255,0.25); }
+    .hex-item:nth-child(4) { bottom: 0; left: 25%; background: rgba(244,200,66,0.1); border-color: rgba(244,200,66,0.25); }
+    .hex-item:nth-child(5) { bottom: 0; right: 25%; background: rgba(255,107,53,0.1); border-color: rgba(255,107,53,0.25); }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 32px;
+    }
+    .slide-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--accent-2); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+    }
+    .slide-tag::before { content: ''; width: 20px; height: 2px; background: var(--accent-2); display: inline-block; }
+    .slide-title { font-size: 34px; font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; }
+    .slide-title .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .slide-num { font-size: 13px; font-weight: 600; color: var(--text-muted); letter-spacing: 1px; }
+
+    .key-message {
+      background: linear-gradient(135deg, rgba(30,111,255,0.12), rgba(0,198,255,0.08));
+      border: 1px solid rgba(30,111,255,0.3); border-left: 3px solid var(--accent);
+      border-radius: 12px; padding: 14px 20px;
+      font-size: 14px; font-weight: 600; color: white;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .key-message .km-icon { font-size: 22px; flex-shrink: 0; }
+
+    /* SLIDE 2: Pain Points */
+    .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+    .pain-card {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 14px; padding: 16px 18px;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .pain-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: rgba(255,82,82,0.15); border: 1px solid rgba(255,82,82,0.25);
+      display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0;
+    }
+    .pain-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    .pain-text strong { color: white; font-weight: 600; display: block; margin-bottom: 2px; font-size: 13.5px; }
+
+    /* SLIDE 3: Concept */
+    .concept-body { display: grid; grid-template-columns: 1fr 1.2fr; gap: 36px; align-items: start; }
+    .flow-chain { display: flex; flex-direction: column; }
+    .flow-step-inner {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 12px; padding: 10px 16px; width: 100%;
+    }
+    .flow-icon-wrap {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0;
+    }
+    .flow-label { font-size: 13.5px; font-weight: 600; }
+    .flow-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+    .flow-arrow { padding: 3px 0 3px 18px; color: var(--accent-2); font-size: 14px; opacity: 0.5; }
+    .features-box {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 16px; padding: 20px;
+    }
+    .features-box h3 { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-2); margin-bottom: 14px; }
+    .feature-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 11px; font-size: 13px; color: var(--text-secondary); line-height: 1.45; }
+    .fi-icon { width: 24px; height: 24px; border-radius: 7px; background: rgba(30,111,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+
+    /* SLIDE 4: Flow */
+    #slide-4 .flow-row { display: flex; align-items: center; justify-content: center; gap: 0; margin-top: 4px; }
+    .flow-box {
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 14px; padding: 14px 12px;
+      width: 106px; min-height: 86px; text-align: center; transition: all 0.3s;
+    }
+    .flow-box:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(30,111,255,0.2); }
+    .flow-box .fb-icon { font-size: 20px; }
+    .flow-box .fb-label { font-size: 11px; font-weight: 700; line-height: 1.3; color: white; }
+    .flow-box .fb-sub { font-size: 10px; color: var(--text-muted); }
+    .flow-arrow-h { font-size: 16px; color: var(--accent-2); opacity: 0.5; margin: 0 2px; }
+    .flow-bottom-row { display: flex; justify-content: center; margin-top: 20px; gap: 0; align-items: center; }
+    .fb-accent-1 { background: rgba(30,111,255,0.12); border-color: rgba(30,111,255,0.3); }
+    .fb-accent-2 { background: rgba(0,229,160,0.08); border-color: rgba(0,229,160,0.25); }
+    .fb-accent-3 { background: rgba(0,198,255,0.08); border-color: rgba(0,198,255,0.25); }
+    .fb-accent-4 { background: rgba(244,200,66,0.08); border-color: rgba(244,200,66,0.25); }
+    .fb-accent-5 { background: rgba(255,107,53,0.08); border-color: rgba(255,107,53,0.25); }
+    .fb-accent-6 { background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.25); }
+    #slide-4 .km-wrap { margin-top: 24px; }
+
+    /* SLIDE 5: Modules */
+    .module-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .module-card {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 14px; padding: 16px 16px 14px;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .module-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+    .module-card:nth-child(1)::after { background: var(--accent); }
+    .module-card:nth-child(2)::after { background: var(--success); }
+    .module-card:nth-child(3)::after { background: var(--accent-2); }
+    .module-card:nth-child(4)::after { background: var(--accent-gold); }
+    .module-card:nth-child(5)::after { background: var(--accent-3); }
+    .module-card:nth-child(6)::after { background: #a855f7; }
+    .module-card:hover { transform: translateY(-3px); }
+    .mc-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .mc-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .mc-title { font-size: 13.5px; font-weight: 700; }
+    .mc-sub { font-size: 11px; color: var(--text-muted); }
+    .mc-items { list-style: none; }
+    .mc-items li {
+      font-size: 12px; color: var(--text-secondary); padding: 2.5px 0;
+      display: flex; align-items: flex-start; gap: 6px; line-height: 1.4;
+    }
+    .mc-items li::before { content: '›'; color: var(--accent-2); font-size: 14px; line-height: 1.2; flex-shrink: 0; }
+
+    /* SLIDE: Access Channels */
+    .channel-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
+    .channel-card {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 14px; padding: 18px 14px 14px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .channel-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+    .channel-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .channel-card:nth-child(1)::after { background: var(--accent); }
+    .channel-card:nth-child(2)::after { background: var(--success); }
+    .channel-card:nth-child(3)::after { background: var(--accent-2); }
+    .channel-card:nth-child(4)::after { background: var(--accent-gold); }
+    .channel-card:nth-child(5)::after { background: #a855f7; }
+
+    .ch-device-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px; border-radius: 100px; font-size: 10.5px; font-weight: 700;
+      width: fit-content; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .badge-desktop { background: rgba(30,111,255,0.18); border: 1px solid rgba(30,111,255,0.4); color: #70b4ff; }
+    .badge-tablet { background: rgba(0,229,160,0.15); border: 1px solid rgba(0,229,160,0.35); color: #5effce; }
+    .badge-mobile { background: rgba(0,198,255,0.15); border: 1px solid rgba(0,198,255,0.35); color: #5be5ff; }
+    .badge-field { background: rgba(244,200,66,0.15); border: 1px solid rgba(244,200,66,0.35); color: #ffdc6b; }
+    .badge-exec { background: rgba(168,85,247,0.18); border: 1px solid rgba(168,85,247,0.38); color: #d8b4fe; }
+
+    .ch-role { font-size: 14px; font-weight: 800; color: white; margin-bottom: 2px; }
+    .ch-dept { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; }
+    .ch-features { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; flex-grow: 1; }
+    .ch-features li {
+      font-size: 11.5px; color: var(--text-secondary); display: flex; align-items: flex-start; gap: 6px; line-height: 1.35;
+    }
+    .ch-features li::before { content: '✔'; font-size: 10px; color: var(--accent-2); margin-top: 1px; flex-shrink: 0; }
+    .ch-footer-tag {
+      background: rgba(255,255,255,0.05); border-radius: 8px; padding: 7px 10px;
+      font-size: 10.5px; color: var(--text-muted); display: flex; align-items: center; gap: 6px;
+    }
+
+    /* SLIDE 7: PO Progress */
+    .po-card {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 16px; padding: 24px 28px; margin-bottom: 14px;
+    }
+    .po-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .po-id { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .po-status-badge {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(0,229,160,0.12); border: 1px solid rgba(0,229,160,0.3);
+      border-radius: 100px; padding: 5px 14px;
+      font-size: 13px; font-weight: 600; color: var(--success);
+    }
+    .po-info-row { display: flex; gap: 24px; margin-bottom: 20px; }
+    .po-info-item { font-size: 13px; color: var(--text-secondary); }
+    .po-info-item span { color: white; font-weight: 600; }
+    .progress-list { display: flex; flex-direction: column; gap: 10px; }
+    .progress-row { display: flex; align-items: center; gap: 12px; }
+    .pr-label { width: 175px; font-size: 13px; font-weight: 500; color: var(--text-secondary); flex-shrink: 0; }
+    .pr-bar-wrap { flex: 1; height: 7px; background: rgba(255,255,255,0.07); border-radius: 100px; overflow: hidden; }
+    .pr-bar { height: 100%; border-radius: 100px; }
+    .pr-pct { width: 42px; font-size: 13px; font-weight: 700; text-align: right; flex-shrink: 0; }
+    .total-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0 0; border-top: 1px solid var(--glass-border); }
+    .total-label { font-size: 14px; font-weight: 600; }
+    .total-val { font-size: 26px; font-weight: 900; }
+    .status-checks { display: flex; gap: 10px; flex-wrap: wrap; }
+    .status-chip {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 100px; padding: 6px 13px; font-size: 12px; color: var(--text-secondary);
+    }
+    .dot-chip { width: 7px; height: 7px; border-radius: 50%; }
+
+    /* SLIDE 7: Dashboard */
+    .dash-body { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+    .kpi-card {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 14px; padding: 16px 14px; transition: all 0.3s;
+    }
+    .kpi-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    .kpi-icon { font-size: 22px; margin-bottom: 8px; }
+    .kpi-val { font-size: 26px; font-weight: 900; margin-bottom: 3px; }
+    .kpi-label { font-size: 11.5px; font-weight: 600; color: var(--text-muted); }
+    .kpi-trend { font-size: 10.5px; margin-top: 5px; }
+    .kpi-blue .kpi-val { color: var(--accent-2); }
+    .kpi-green .kpi-val { color: var(--success); }
+    .kpi-yellow .kpi-val { color: var(--accent-gold); }
+    .kpi-red .kpi-val { color: var(--danger); }
+    .dash-q-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+    .dash-q {
+      background: rgba(30,111,255,0.07); border: 1px solid rgba(30,111,255,0.18);
+      border-radius: 10px; padding: 9px 13px; font-size: 12.5px; color: var(--text-secondary);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* SLIDE 8: AI */
+    .ai-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 22px; }
+    .ai-features { display: flex; flex-direction: column; gap: 10px; }
+    .ai-feature-card {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 13px; padding: 12px 16px;
+      display: flex; gap: 12px; align-items: flex-start; transition: all 0.3s;
+    }
+    .ai-feature-card:hover { border-color: rgba(168,85,247,0.4); background: rgba(168,85,247,0.08); }
+    .ai-feat-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.25);
+      display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0;
+    }
+    .ai-feat-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    .ai-feat-text strong { color: white; font-size: 13.5px; font-weight: 600; display: block; margin-bottom: 2px; }
+    .ai-chat-box {
+      background: var(--glass); border: 1px solid rgba(168,85,247,0.25);
+      border-radius: 16px; padding: 18px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .ai-chat-box h4 { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #a855f7; margin-bottom: 4px; }
+    .chat-bubble { border-radius: 12px; padding: 9px 13px; font-size: 12.5px; line-height: 1.5; max-width: 92%; }
+    .chat-user { background: rgba(30,111,255,0.18); border: 1px solid rgba(30,111,255,0.25); color: white; align-self: flex-end; text-align: right; }
+    .chat-ai { background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.25); color: var(--text-secondary); align-self: flex-start; }
+    .chat-ai strong { color: var(--success); }
+    .ai-km { background: linear-gradient(135deg, rgba(168,85,247,0.12), rgba(30,111,255,0.08)); border: 1px solid rgba(168,85,247,0.25); }
+
+    /* SLIDE 9: Roadmap */
+    .roadmap-track { display: flex; flex-direction: column; gap: 13px; }
+    .phase-card {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 14px; padding: 16px 20px;
+      display: grid; grid-template-columns: 190px 1fr; gap: 20px; align-items: center;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .phase-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+    .phase-card:nth-child(1)::before { background: var(--accent); }
+    .phase-card:nth-child(2)::before { background: var(--success); }
+    .phase-card:nth-child(3)::before { background: var(--accent-gold); }
+    .phase-card:nth-child(4)::before { background: #a855f7; }
+    .phase-card:hover { transform: translateX(4px); }
+    .phase-num { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+    .phase-name { font-size: 15px; font-weight: 800; line-height: 1.25; }
+    .phase-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; margin-top: 4px; width: fit-content; }
+    .badge-1 { background: rgba(30,111,255,0.15); color: var(--accent-2); border: 1px solid rgba(30,111,255,0.3); }
+    .badge-2 { background: rgba(0,229,160,0.12); color: var(--success); border: 1px solid rgba(0,229,160,0.25); }
+    .badge-3 { background: rgba(244,200,66,0.12); color: var(--accent-gold); border: 1px solid rgba(244,200,66,0.25); }
+    .badge-4 { background: rgba(168,85,247,0.12); color: #a855f7; border: 1px solid rgba(168,85,247,0.25); }
+    .phase-items { display: flex; flex-wrap: wrap; gap: 7px; }
+    .phase-tag { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; padding: 5px 11px; font-size: 12px; color: var(--text-secondary); }
+
+    /* SLIDE 10: Benefits */
+    .benefit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+    .benefit-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 14px; padding: 16px 14px; text-align: center; transition: all 0.3s; }
+    .benefit-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(30,111,255,0.15); }
+    .bc-icon { font-size: 26px; margin-bottom: 9px; }
+    .bc-title { font-size: 13.5px; font-weight: 700; margin-bottom: 5px; }
+    .bc-desc { font-size: 11.5px; color: var(--text-secondary); line-height: 1.5; }
+    .closing-box {
+      background: linear-gradient(135deg, rgba(30,111,255,0.15), rgba(0,198,255,0.08));
+      border: 1px solid rgba(30,111,255,0.3); border-radius: 14px; padding: 18px 26px;
+      text-align: center; font-size: 15.5px; font-weight: 600; line-height: 1.65;
+    }
+
+    /* NAV */
+    #nav-bar {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(10,22,40,0.88); border: 1px solid var(--glass-border);
+      border-radius: 100px; padding: 9px 18px; backdrop-filter: blur(20px);
+      z-index: 100; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+    .nav-btn {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      color: var(--text-primary); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .nav-btn:hover { background: var(--accent); border-color: var(--accent); }
+    .nav-dots { display: flex; gap: 6px; }
+    .nav-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.25); cursor: pointer; transition: all 0.3s; }
+    .nav-dot.active { background: var(--accent-2); width: 20px; border-radius: 100px; }
+    #slide-counter { font-size: 12px; font-weight: 600; color: var(--text-muted); min-width: 40px; text-align: center; }
+
+    #fs-btn {
+      position: fixed; top: 20px; right: 20px; width: 40px; height: 40px;
+      border-radius: 10px; background: rgba(10,22,40,0.8); border: 1px solid var(--glass-border);
+      color: var(--text-secondary); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 100; backdrop-filter: blur(12px); transition: all 0.2s;
+    }
+    #fs-btn:hover { background: var(--accent); color: white; }
+  </style>
+</head>
+<body>
+
+<button id="fs-btn" title="Fullscreen / เต็มจอ">⛶</button>
+
+<div id="pres-shell">
+  <div id="slide-viewport">
+    <div class="slides-track" id="track">
+
+      <!-- SLIDE 1: TITLE -->
+      <div class="slide" id="slide-1">
+        <div class="slide-grid-bg"></div>
+        <div class="hero-glow"></div>
+
+        <div class="title-badge"><div class="dot"></div>Metro AutoMation Solution</div>
+
+        <h1>Project PO<br/>Automation<br/>System</h1>
+
+        <p class="subtitle-thai">
+          ระบบบริหารงานตั้งแต่ปิดการขาย ผลิต ขนส่ง<br/>
+          หน้างาน วางบิล จนถึงส่งมอบ — ทุกอย่างใน Platform เดียว
+        </p>
+
+        <div class="pill-row">
+          <div class="pill"><span>🏗️</span> สำหรับธุรกิจรับเหมาก่อสร้าง</div>
+          <div class="pill"><span>📋</span> งานผลิตตาม PO</div>
+          <div class="pill"><span>📡</span> Real-Time Status Tracking</div>
+        </div>
+
+        <div class="hexagon-grid">
+          <div class="hex-item"><div class="icon">📋</div><div>Project PO</div></div>
+          <div class="hex-item"><div class="icon">🏭</div><div>Production</div></div>
+          <div class="hex-item"><div class="icon">🚚</div><div>Delivery</div></div>
+          <div class="hex-item"><div class="icon">🏗️</div><div>Site Work</div></div>
+          <div class="hex-item"><div class="icon">💰</div><div>Billing</div></div>
+        </div>
+
+        <div class="company-logo">
+          <div class="logo-name">METRO AUTOMATION</div>
+          <div class="logo-sub">Enterprise Business Solutions</div>
+        </div>
+
+        <div class="bottom-bar"></div>
+      </div>
+
+      <!-- SLIDE 2: PAIN POINTS -->
+      <div class="slide" id="slide-2">
+        <div class="slide-grid-bg"></div>
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">Business Challenge</div>
+            <h2 class="slide-title">ปัญหาที่เกิดขึ้น<br/><span class="highlight">ในกระบวนการปัจจุบัน</span></h2>
+          </div>
+          <div class="slide-num">02 / 11</div>
+        </div>
+
+        <div class="pain-grid">
+          <div class="pain-card">
+            <div class="pain-icon">🔀</div>
+            <div class="pain-text"><strong>ข้อมูลกระจายหลายฝ่าย</strong>หลังปิดการขาย ไม่มีศูนย์กลาง แต่ละฝ่าย Update แยกกัน</div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-icon">❓</div>
+            <div class="pain-text"><strong>ไม่รู้ว่า PO อยู่ขั้นตอนไหน</strong>ไม่มีการติดตามแบบ Real-Time ต้องถามหลายคนกว่าจะรู้</div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-icon">🗂️</div>
+            <div class="pain-text"><strong>เอกสารไม่เชื่อมต่อกัน</strong>PO, ใบมัดจำ, ใบส่งของ, ใบวางบิล — ต่างอยู่คนละระบบ</div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-icon">🧑‍💼</div>
+            <div class="pain-text"><strong>ผู้บริหารมองไม่เห็นภาพรวม</strong>ต้องถามทีละคน ทีละฝ่าย กว่าจะรู้สถานะงานทั้งหมด</div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-icon">💸</div>
+            <div class="pain-text"><strong>วางบิล / เก็บเงินล่าช้า</strong>ไม่รู้ว่างานถึง Milestone ไหน ทำให้พลาดจังหวะการวางบิล</div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-icon">📵</div>
+            <div class="pain-text"><strong>ตามงานผ่าน Line / โทรศัพท์</strong>ไม่มีระบบแจ้งเตือน ใช้คนตามงานแทน เสี่ยงพลาด</div>
+          </div>
+        </div>
+
+        <div class="key-message">
+          <div class="km-icon">💡</div>
+          <div><strong>Key Message:</strong> ปัญหาหลักไม่ใช่แค่การทำงานช้า แต่คือ <em>"ข้อมูลของแต่ละฝ่ายไม่ไหลต่อกัน"</em></div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: SYSTEM CONCEPT -->
+      <div class="slide" id="slide-3">
+        <div class="slide-grid-bg"></div>
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">System Concept</div>
+            <h2 class="slide-title">แนวคิดระบบ:<br/><span class="highlight">Project PO เป็นศูนย์กลาง</span></h2>
+          </div>
+          <div class="slide-num">03 / 11</div>
+        </div>
+
+        <div class="concept-body">
+          <div class="flow-chain">
+            <div class="flow-step-inner"><div class="flow-icon-wrap" style="background:rgba(30,111,255,0.2);border:1px solid rgba(30,111,255,0.35);">💼</div><div><div class="flow-label">Sales</div><div class="flow-sub">ปิดการขาย, สร้าง Project PO</div></div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step-inner"><div class="flow-icon-wrap" style="background:rgba(0,229,160,0.15);border:1px solid rgba(0,229,160,0.3);">🏭</div><div><div class="flow-label">Production</div><div class="flow-sub">วางแผนผลิต, Update %</div></div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step-inner"><div class="flow-icon-wrap" style="background:rgba(0,198,255,0.15);border:1px solid rgba(0,198,255,0.3);">🚚</div><div><div class="flow-label">Delivery</div><div class="flow-sub">วางแผนจัดส่ง, Update %</div></div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step-inner"><div class="flow-icon-wrap" style="background:rgba(244,200,66,0.15);border:1px solid rgba(244,200,66,0.3);">🏗️</div><div><div class="flow-label">Site Work</div><div class="flow-sub">วางแผนงาน, บันทึกหน้างาน</div></div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step-inner"><div class="flow-icon-wrap" style="background:rgba(255,107,53,0.15);border:1px solid rgba(255,107,53,0.3);">💰</div><div><div class="flow-label">Accounting</div><div class="flow-sub">วางบิล, ติดตามชำระเงิน</div></div></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-step-inner"><div class="flow-icon-wrap" style="background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);">📊</div><div><div class="flow-label">Management Dashboard</div><div class="flow-sub">เห็นภาพรวมทุก PO แบบ Real-Time</div></div></div>
+          </div>
+
+          <div>
+            <div class="features-box" style="margin-bottom:14px;">
+              <h3>สิ่งที่ระบบต้องทำ</h3>
+              <div class="feature-item"><div class="fi-icon">🔗</div>รวมข้อมูลของ PO ไว้ที่เดียว ทุกฝ่ายเห็นข้อมูลเดียวกัน</div>
+              <div class="feature-item"><div class="fi-icon">👥</div>แยกหน้าที่แต่ละฝ่ายชัดเจน ตาม Role Permission</div>
+              <div class="feature-item"><div class="fi-icon">📈</div>ติดตาม Progress เป็น % แบบ Real-Time</div>
+              <div class="feature-item"><div class="fi-icon">🔔</div>แจ้งเตือนงานที่เสี่ยงล่าช้าหรือหมดเวลา</div>
+              <div class="feature-item"><div class="fi-icon">🧾</div>เชื่อมข้อมูลไปยังการวางบิลและรับเงินตาม Milestone</div>
+            </div>
+            <div class="key-message">
+              <div class="km-icon">🎯</div>
+              <div>ทุกฝ่ายทำงานบน <strong>PO เดียวกัน</strong> และ Update สถานะตามหน้าที่ของตัวเอง</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: OVERALL FLOW -->
+      <div class="slide" id="slide-4">
+        <div class="slide-grid-bg"></div>
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">Process Overview</div>
+            <h2 class="slide-title">ภาพรวม<span class="highlight">การไหลของงาน</span></h2>
+          </div>
+          <div class="slide-num">04 / 11</div>
+        </div>
+
+        <div class="flow-row" id="slide-4">
+          <div class="flow-box fb-accent-1"><div class="fb-icon">💼</div><div class="fb-label">ปิดการขาย</div><div class="fb-sub">Sales</div></div>
+          <div class="flow-arrow-h">→</div>
+          <div class="flow-box fb-accent-3"><div class="fb-icon">💵</div><div class="fb-label">รับเงินมัดจำ</div><div class="fb-sub">Deposit</div></div>
+          <div class="flow-arrow-h">→</div>
+          <div class="flow-box" style="background:rgba(30,111,255,0.22);border-color:rgba(30,111,255,0.55);box-shadow:0 0 22px rgba(30,111,255,0.3);"><div class="fb-icon">📋</div><div class="fb-label">สร้าง Project PO</div><div class="fb-sub" style="color:var(--accent-2);">Central Hub</div></div>
+          <div class="flow-arrow-h">→</div>
+          <div class="flow-box fb-accent-2"><div class="fb-icon">🏭</div><div class="fb-label">วางแผนผลิต</div><div class="fb-sub">Production</div></div>
+          <div class="flow-arrow-h">→</div>
+          <div class="flow-box fb-accent-3"><div class="fb-icon">🚚</div><div class="fb-label">วางแผนจัดส่ง</div><div class="fb-sub">Delivery</div></div>
+        </div>
+
+        <div class="flow-bottom-row">
+          <div class="flow-box fb-accent-4"><div class="fb-icon">🏗️</div><div class="fb-label">งานหน้า Site</div><div class="fb-sub">Site Work</div></div>
+          <div class="flow-arrow-h">→</div>
+          <div class="flow-box fb-accent-2"><div class="fb-icon">✅</div><div class="fb-label">ส่งมอบงาน</div><div class="fb-sub">Handover</div></div>
+          <div class="flow-arrow-h">→</div>
+          <div class="flow-box fb-accent-5"><div class="fb-icon">🧾</div><div class="fb-label">วางบิล</div><div class="fb-sub">Billing</div></div>
+          <div class="flow-arrow-h">→</div>
+          <div class="flow-box fb-accent-3"><div class="fb-icon">💳</div><div class="fb-label">รับชำระเงิน</div><div class="fb-sub">Payment</div></div>
+          <div class="flow-arrow-h">→</div>
+          <div class="flow-box fb-accent-6"><div class="fb-icon">🔒</div><div class="fb-label">ปิด Project</div><div class="fb-sub">Closed</div></div>
+        </div>
+
+        <div class="km-wrap">
+          <div class="key-message">
+            <div class="km-icon">🔗</div>
+            <div>ทุกขั้นตอนเชื่อมกันผ่าน <strong>Project PO</strong> — ตรวจสอบย้อนหลังและดูสถานะปัจจุบันได้ทันที</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 5: MODULE DESIGN -->
+      <div class="slide" id="slide-5">
+        <div class="slide-grid-bg"></div>
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">System Architecture</div>
+            <h2 class="slide-title">โครงสร้างระบบ<span class="highlight">ที่เสนอ</span></h2>
+          </div>
+          <div class="slide-num">05 / 11</div>
+        </div>
+
+        <div class="module-grid">
+          <div class="module-card">
+            <div class="mc-head"><div class="mc-icon" style="background:rgba(30,111,255,0.2);">💼</div><div><div class="mc-title">Sales Module</div><div class="mc-sub">ฝ่ายขาย</div></div></div>
+            <ul class="mc-items"><li>สร้าง Project PO</li><li>บันทึกข้อมูลลูกค้า</li><li>รับเงินมัดจำ</li><li>แนบ PO / สัญญา / Slip</li></ul>
+          </div>
+          <div class="module-card">
+            <div class="mc-head"><div class="mc-icon" style="background:rgba(0,229,160,0.15);">🏭</div><div><div class="mc-title">Production Module</div><div class="mc-sub">ฝ่ายผลิต</div></div></div>
+            <ul class="mc-items"><li>รับรายการ PO</li><li>วางแผนการผลิต</li><li>Update % ผลิต</li><li>แจ้งรายการพร้อมส่ง</li></ul>
+          </div>
+          <div class="module-card">
+            <div class="mc-head"><div class="mc-icon" style="background:rgba(0,198,255,0.15);">🚚</div><div><div class="mc-title">Delivery Module</div><div class="mc-sub">ฝ่ายขนส่ง</div></div></div>
+            <ul class="mc-items"><li>ยิง QR/Barcode ออกคลัง (Scan Out)</li><li><strong>Site GPS Verify:</strong> เช็คพิกัดไซต์งาน</li><li>ตรวจนับยอดรับจริง / คืนสินค้าตีกลับ</li><li>ถ่ายรูป POD + เซ็นรับ e-Signature</li></ul>
+          </div>
+          <div class="module-card">
+            <div class="mc-head"><div class="mc-icon" style="background:rgba(244,200,66,0.15);">🏗️</div><div><div class="mc-title">Site Module</div><div class="mc-sub">หน้างาน</div></div></div>
+            <ul class="mc-items"><li>สแกน Master QR รับของเข้าไซต์</li><li>เช็คอิน GPS ตรงพิกัดโครงการ</li><li>ตรวจรับยอด / ถ่ายรูปแจ้งของตีกลับ</li><li>Update % งานก่อสร้าง &amp; ส่งมอบ</li></ul>
+          </div>
+          <div class="module-card">
+            <div class="mc-head"><div class="mc-icon" style="background:rgba(255,107,53,0.15);">💰</div><div><div class="mc-title">Accounting Module</div><div class="mc-sub">ฝ่ายบัญชี</div></div></div>
+            <ul class="mc-items"><li>วางบิลเต็ม / เป็นงวด</li><li>ผูกบิลกับ Milestone</li><li>ติดตามยอดชำระ</li><li>ปิดยอด PO</li></ul>
+          </div>
+          <div class="module-card">
+            <div class="mc-head"><div class="mc-icon" style="background:rgba(139,92,246,0.15);">📊</div><div><div class="mc-title">Management Dashboard</div><div class="mc-sub">ผู้บริหาร</div></div></div>
+            <ul class="mc-items"><li>เห็นภาพรวมทุก PO</li><li>ดูงานล่าช้า</li><li>ดู Progress รายฝ่าย</li><li>ดูยอดเงิน / สถานะวางบิล</li></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 6: ACCESS CHANNELS BY ROLE -->
+      <div class="slide" id="slide-6">
+        <div class="slide-grid-bg"></div>
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">Access Channels &amp; Platform Strategy</div>
+            <h2 class="slide-title">ช่องทางการใช้งาน<span class="highlight">ตามบทบาทของแต่ละฝ่าย</span></h2>
+          </div>
+          <div class="slide-num">06 / 11</div>
+        </div>
+
+        <div class="channel-grid">
+          <!-- 1. Office / Sales & Accounting -->
+          <div class="channel-card">
+            <div>
+              <div class="ch-device-badge badge-desktop">💻 Desktop Web</div>
+              <div class="ch-role">Office &amp; Finance</div>
+              <div class="ch-dept">ฝ่ายขาย (Sales) &amp; ฝ่ายบัญชี</div>
+              <ul class="ch-features">
+                <li>เปิด PO, จัดการสัญญา &amp; BOQ</li>
+                <li>แนบสลิปมัดจำ &amp; เอกสารหลายไฟล์</li>
+                <li>ผูกงวดวางบิลกับ Milestone งาน</li>
+                <li>กระทบยอดชำระ &amp; ออกใบเสร็จ</li>
+              </ul>
+            </div>
+            <div class="ch-footer-tag">🖥️ จอใหญ่ คีย์ข้อมูลละเอียด รวดเร็ว</div>
+          </div>
+
+          <!-- 2. Factory / Production -->
+          <div class="channel-card">
+            <div>
+              <div class="ch-device-badge badge-tablet">🖥️📱 Desktop + Tablet</div>
+              <div class="ch-role">Factory &amp; Workshop</div>
+              <div class="ch-dept">ฝ่ายวางแผน &amp; ไลน์ผลิต</div>
+              <ul class="ch-features">
+                <li>Desktop: คุม Gantt / BOM / คิวผลิต</li>
+                <li>Tablet: ประจำจุดไลน์ผลิตและ QC</li>
+                <li>ปุ่มกดสัมผัสขนาดใหญ่ Update %</li>
+                <li>พิมพ์ Barcode ชิ้นงาน/พาเลท</li>
+              </ul>
+            </div>
+            <div class="ch-footer-tag">🏭 สัมผัสง่าย เหมาะกับโรงงาน</div>
+          </div>
+
+          <!-- 3. Delivery / Logistics -->
+          <div class="channel-card">
+            <div>
+              <div class="ch-device-badge badge-mobile">🚚📲 Mobile / LINE LIFF</div>
+              <div class="ch-role">Logistics &amp; Delivery</div>
+              <div class="ch-dept">ฝ่ายจัดส่ง &amp; คนขับรถ</div>
+              <ul class="ch-features">
+                <li>สแกน QR ออกคลัง (Dispatched)</li>
+                <li><strong>Site GPS Verify:</strong> เตือนหากผิดไซต์</li>
+                <li>บันทึกยอดรับจริง / ชำรุดตีกลับ</li>
+                <li>ถ่ายรูป POD + e-Signature เซ็นรับ</li>
+              </ul>
+            </div>
+            <div class="ch-footer-tag">📍 ป้องกันส่งของผิดไซต์งาน 100%</div>
+          </div>
+
+          <!-- 4. Site Work / Field Engineers -->
+          <div class="channel-card">
+            <div>
+              <div class="ch-device-badge badge-field">🏗️📱 Mobile App (Offline)</div>
+              <div class="ch-role">Site Operations</div>
+              <div class="ch-dept">วิศวกร &amp; โฟร์แมนหน้างาน</div>
+              <ul class="ch-features">
+                <li>สแกน Master QR ตรวจรับของเข้าไซต์</li>
+                <li>ตรวจนับยอด &amp; ถ่ายรูปของตีกลับ (Return)</li>
+                <li>Update % งานก่อสร้างตามงวด</li>
+                <li><strong>Offline Sync</strong> เมื่อสัญญาณอับ</li>
+              </ul>
+            </div>
+            <div class="ch-footer-tag">📶 สแกนรับของ + บันทึกออฟไลน์</div>
+          </div>
+
+          <!-- 5. Executive / Management -->
+          <div class="channel-card">
+            <div>
+              <div class="ch-device-badge badge-exec">📊🔔 Dashboard + LINE OA</div>
+              <div class="ch-role">Executive &amp; PM</div>
+              <div class="ch-dept">ผู้บริหาร &amp; ผู้จัดการโครงการ</div>
+              <ul class="ch-features">
+                <li>Track สถานะขนส่ง Real-Time</li>
+                <li>รู้ทันทีเมื่อมีรายการของตีกลับ</li>
+                <li><strong>LINE Notify:</strong> เตือนงานล่าช้าทันที</li>
+                <li>แจ้งเตือนเมื่อถึงงวดวางบิล</li>
+              </ul>
+            </div>
+            <div class="ch-footer-tag">📱 รู้ทันทีเมื่อมีปัญหา ไม่ต้องรอถาม</div>
+          </div>
+        </div>
+
+        <div class="key-message">
+          <div class="km-icon">💡</div>
+          <div><strong>Key Strategy:</strong> ขนส่งและหน้างานใช้ <em>Mobile สแกน QR/Barcode + ตรวจจับ Site GPS</em> ป้องกันส่งของผิดไซต์ ตรวจนับยอดรับจริงและบันทึกตีกลับทันที | บัญชีวางบิลตรงตามยอดจริง | ผู้บริหารดู <em>Real-Time Dashboard</em></div>
+        </div>
+      </div>
+
+      <!-- SLIDE 7: PO PROGRESS VIEW -->
+      <div class="slide" id="slide-7">
+        <div class="slide-grid-bg"></div>
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">Live Tracking</div>
+            <h2 class="slide-title">ตัวอย่างหน้า<span class="highlight">ภาพรวมของ PO</span></h2>
+          </div>
+          <div class="slide-num">07 / 11</div>
+        </div>
+
+        <div class="po-card">
+          <div class="po-header">
+            <div>
+              <div class="po-id">📋 PO-2026-001</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">สร้างโดย: ฝ่ายขาย · 15 ก.ย. 2026</div>
+            </div>
+            <div class="po-status-badge">
+              <div style="width:7px;height:7px;border-radius:50%;background:var(--success);animation:blink 2s infinite;"></div>
+              กำลังดำเนินการ
+            </div>
+          </div>
+
+          <div class="po-info-row">
+            <div class="po-info-item">ลูกค้า: <span>ABC Construction</span></div>
+            <div class="po-info-item">Project: <span>งานติดตั้ง / ก่อสร้าง Site A</span></div>
+            <div class="po-info-item">มูลค่า: <span>฿ 4,500,000</span></div>
+          </div>
+
+          <div class="progress-list">
+            <div class="progress-row">
+              <div class="pr-label">💼 Sales / Deposit</div>
+              <div class="pr-bar-wrap"><div class="pr-bar" style="width:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));"></div></div>
+              <div class="pr-pct" style="color:var(--accent-2);">100%</div>
+            </div>
+            <div class="progress-row">
+              <div class="pr-label">🏭 Production</div>
+              <div class="pr-bar-wrap"><div class="pr-bar" style="width:65%;background:linear-gradient(90deg,var(--success),#00d4aa);"></div></div>
+              <div class="pr-pct" style="color:var(--success);">65%</div>
+            </div>
+            <div class="progress-row">
+              <div class="pr-label">🚚 Delivery</div>
+              <div class="pr-bar-wrap"><div class="pr-bar" style="width:40%;background:linear-gradient(90deg,#00bfff,var(--accent-2));"></div></div>
+              <div class="pr-pct" style="color:#00bfff;">40%</div>
+            </div>
+            <div class="progress-row">
+              <div class="pr-label">🏗️ Site Work</div>
+              <div class="pr-bar-wrap"><div class="pr-bar" style="width:25%;background:linear-gradient(90deg,var(--accent-gold),#ffd54f);"></div></div>
+              <div class="pr-pct" style="color:var(--accent-gold);">25%</div>
+            </div>
+            <div class="progress-row">
+              <div class="pr-label">💰 Billing / Payment</div>
+              <div class="pr-bar-wrap"><div class="pr-bar" style="width:30%;background:linear-gradient(90deg,var(--accent-3),#ff8c60);"></div></div>
+              <div class="pr-pct" style="color:var(--accent-3);">30%</div>
+            </div>
+            <div class="total-row">
+              <div class="total-label">Overall Progress</div>
+              <div class="total-val" style="background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">48%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="status-checks">
+          <div class="status-chip"><div class="dot-chip" style="background:var(--success);"></div>อยู่ขั้นตอน: ผลิต</div>
+          <div class="status-chip"><div class="dot-chip" style="background:var(--accent);"></div>รับผิดชอบ: ฝ่ายผลิต</div>
+          <div class="status-chip"><div class="dot-chip" style="background:var(--accent-gold);"></div>ไม่มีงานล่าช้า</div>
+          <div class="status-chip"><div class="dot-chip" style="background:var(--accent-3);"></div>วางบิลงวด 2 (เมื่อผลิต 80%)</div>
+          <div class="status-chip"><div class="dot-chip" style="background:#a855f7;"></div>Update ล่าสุด: วันนี้ 09:30 น.</div>
+        </div>
+      </div>
+
+      <!-- SLIDE 8: MANAGEMENT DASHBOARD -->
+      <div class="slide" id="slide-8">
+        <div class="slide-grid-bg"></div>
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">Executive View</div>
+            <h2 class="slide-title">ภาพรวม<span class="highlight">สำหรับผู้บริหาร</span></h2>
+          </div>
+          <div class="slide-num">08 / 11</div>
+        </div>
+
+        <div class="dash-body">
+          <div class="kpi-card kpi-blue"><div class="kpi-icon">📋</div><div class="kpi-val">24</div><div class="kpi-label">Total Active PO</div><div class="kpi-trend" style="color:var(--success);">↑ +3 จากเดือนที่แล้ว</div></div>
+          <div class="kpi-card kpi-green"><div class="kpi-icon">💰</div><div class="kpi-val">68.2M</div><div class="kpi-label">Total Project Value (฿)</div><div class="kpi-trend" style="color:var(--success);">↑ +12% YTD</div></div>
+          <div class="kpi-card kpi-yellow"><div class="kpi-icon">💵</div><div class="kpi-val">18.5M</div><div class="kpi-label">Deposit Received (฿)</div><div class="kpi-trend" style="color:var(--text-muted);">27% of Total</div></div>
+          <div class="kpi-card kpi-red"><div class="kpi-icon">⚠️</div><div class="kpi-val">3</div><div class="kpi-label">Production Delayed</div><div class="kpi-trend" style="color:var(--danger);">ต้องดำเนินการด่วน</div></div>
+          <div class="kpi-card"><div class="kpi-icon">🚚</div><div class="kpi-val" style="color:var(--accent-3);">7</div><div class="kpi-label">Delivery Pending</div><div class="kpi-trend" style="color:var(--text-muted);">รอจัดส่ง</div></div>
+          <div class="kpi-card"><div class="kpi-icon">🏗️</div><div class="kpi-val" style="color:#f97316;">2</div><div class="kpi-label">Site Work Delayed</div><div class="kpi-trend" style="color:var(--warning);">ต้องติดตาม</div></div>
+          <div class="kpi-card kpi-yellow"><div class="kpi-icon">🧾</div><div class="kpi-val">5</div><div class="kpi-label">Billing Due</div><div class="kpi-trend" style="color:var(--accent-gold);">พร้อมวางบิล</div></div>
+          <div class="kpi-card kpi-red"><div class="kpi-icon">🔴</div><div class="kpi-val">2</div><div class="kpi-label">Payment Overdue</div><div class="kpi-trend" style="color:var(--danger);">ต้องติดตามด่วน</div></div>
+        </div>
+
+        <div class="dash-q-grid">
+          <div class="dash-q"><span>🔍</span>PO ไหนกำลังผลิตอยู่?</div>
+          <div class="dash-q"><span>🚚</span>งานไหนรอจัดส่ง?</div>
+          <div class="dash-q"><span>🏗️</span>งานไหนอยู่หน้า Site?</div>
+          <div class="dash-q"><span>✅</span>งานไหนพร้อมส่งมอบ?</div>
+          <div class="dash-q"><span>🧾</span>งานไหนรอวางบิล?</div>
+          <div class="dash-q"><span>⚠️</span>งานไหนเสี่ยงล่าช้า?</div>
+        </div>
+      </div>
+
+      <!-- SLIDE 9: AI AUTOMATION -->
+      <div class="slide" id="slide-9">
+        <div class="slide-grid-bg"></div>
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">AI Integration</div>
+            <h2 class="slide-title">จุดที่ <span class="highlight">AI</span> ช่วยเพิ่มประสิทธิภาพ</h2>
+          </div>
+          <div class="slide-num">09 / 11</div>
+        </div>
+
+        <div class="ai-grid">
+          <div class="ai-features">
+            <div class="ai-feature-card"><div class="ai-feat-icon">📄</div><div class="ai-feat-text"><strong>OCR อ่านเอกสาร</strong>อ่าน PO / สัญญา / ใบเสนอราคา แล้วดึงข้อมูลเข้า Project PO อัตโนมัติ</div></div>
+            <div class="ai-feature-card"><div class="ai-feat-icon">📊</div><div class="ai-feat-text"><strong>Auto Summary</strong>สรุปสถานะงานแต่ละ PO + Daily Report จากทุกฝ่ายอัตโนมัติ</div></div>
+            <div class="ai-feature-card"><div class="ai-feat-icon">🔔</div><div class="ai-feat-text"><strong>Smart Alert</strong>แจ้งเตือนงานที่ไม่มีการ Update / วิเคราะห์งานที่มีโอกาสล่าช้า</div></div>
+            <div class="ai-feature-card"><div class="ai-feat-icon">⚠️</div><div class="ai-feat-text"><strong>Risk Analysis</strong>วิเคราะห์ความเสี่ยงจาก Pattern ของข้อมูล ก่อนปัญหาจะเกิด</div></div>
+            <div class="key-message ai-km">
+              <div class="km-icon">🤖</div>
+              <div>AI ไม่ได้แทนคน — แต่<strong>ลดงานตามข้อมูล</strong>และ<strong>ช่วยตัดสินใจเร็วขึ้น</strong></div>
+            </div>
+          </div>
+
+          <div class="ai-chat-box">
+            <h4>💬 Management AI Chatbot</h4>
+            <div class="chat-bubble chat-user">PO ไหนผลิตล่าช้า?</div>
+            <div class="chat-bubble chat-ai">PO-2026-003 และ PO-2026-007 ล่าช้ากว่า Plan <strong>5 วัน</strong><br/>สาเหตุ: วัสดุไม่ครบ ควรติดตามด่วน</div>
+            <div class="chat-bubble chat-user">งานไหนพร้อมวางบิล?</div>
+            <div class="chat-bubble chat-ai">PO-2026-001, 004, 009 ส่งมอบครบแล้ว<br/>รวมยอดที่ควรวางบิล <strong>฿ 3,240,000</strong></div>
+            <div class="chat-bubble chat-user">Project ไหนใกล้ส่งมอบ?</div>
+            <div class="chat-bubble chat-ai">PO-2026-012 Site Work <strong>95%</strong><br/>คาดส่งมอบภายใน <strong>3 วัน</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 10: ROADMAP -->
+      <div class="slide" id="slide-10">
+        <div class="slide-grid-bg"></div>
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">Implementation Plan</div>
+            <h2 class="slide-title">แนวทางการพัฒนา<span class="highlight">เป็น Phase</span></h2>
+          </div>
+          <div class="slide-num">10 / 11</div>
+        </div>
+
+        <div class="roadmap-track">
+          <div class="phase-card">
+            <div>
+              <div class="phase-num">Phase 1</div>
+              <div class="phase-name">Discovery &amp; Workflow Mapping</div>
+              <div class="phase-badge badge-1">🔍 2–4 สัปดาห์</div>
+            </div>
+            <div class="phase-items">
+              <div class="phase-tag">📋 สำรวจระบบเดิม</div>
+              <div class="phase-tag">🗺️ เก็บ Flow งานจริง</div>
+              <div class="phase-tag">🔗 ตรวจสอบการเชื่อมข้อมูล</div>
+              <div class="phase-tag">🎯 กำหนด MVP</div>
+            </div>
+          </div>
+          <div class="phase-card">
+            <div>
+              <div class="phase-num">Phase 2</div>
+              <div class="phase-name">MVP – Project PO Tracking</div>
+              <div class="phase-badge badge-2">🚀 6–8 สัปดาห์</div>
+            </div>
+            <div class="phase-items">
+              <div class="phase-tag">📋 สร้าง Project PO กลาง</div>
+              <div class="phase-tag">🏭 Sales / Production / Delivery</div>
+              <div class="phase-tag">🏗️ Site / Accounting Update</div>
+              <div class="phase-tag">📊 Dashboard ผู้บริหาร</div>
+            </div>
+          </div>
+          <div class="phase-card">
+            <div>
+              <div class="phase-num">Phase 3</div>
+              <div class="phase-name">Document &amp; Billing Automation</div>
+              <div class="phase-badge badge-3">📄 4–6 สัปดาห์</div>
+            </div>
+            <div class="phase-items">
+              <div class="phase-tag">📎 แนบเอกสาร</div>
+              <div class="phase-tag">🧾 ติดตาม Milestone วางบิล</div>
+              <div class="phase-tag">🔔 แจ้งเตือนยอดค้างชำระ</div>
+            </div>
+          </div>
+          <div class="phase-card">
+            <div>
+              <div class="phase-num">Phase 4</div>
+              <div class="phase-name">AI Automation &amp; Intelligence</div>
+              <div class="phase-badge badge-4">🤖 6–8 สัปดาห์</div>
+            </div>
+            <div class="phase-items">
+              <div class="phase-tag">🔍 OCR อ่านเอกสาร</div>
+              <div class="phase-tag">📊 AI Summary</div>
+              <div class="phase-tag">⚠️ Risk Alert</div>
+              <div class="phase-tag">💬 Management Chatbot</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 11: BENEFITS -->
+      <div class="slide" id="slide-11">
+        <div class="slide-grid-bg"></div>
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">Expected Benefits</div>
+            <h2 class="slide-title">ผลลัพธ์<span class="highlight">ที่คาดหวัง</span></h2>
+          </div>
+          <div class="slide-num">11 / 11</div>
+        </div>
+
+        <div class="benefit-grid">
+          <div class="benefit-card"><div class="bc-icon">🔗</div><div class="bc-title">ข้อมูลเดียวกันทุกฝ่าย</div><div class="bc-desc">ทุกคนเห็น PO เดียวกัน ไม่ต้องส่งข้อมูลซ้ำกัน</div></div>
+          <div class="benefit-card"><div class="bc-icon">📡</div><div class="bc-title">Real-Time Status</div><div class="bc-desc">รู้สถานะผลิต ขนส่ง หน้างาน บัญชี แบบทันที</div></div>
+          <div class="benefit-card"><div class="bc-icon">📵</div><div class="bc-title">ลดการตามงาน</div><div class="bc-desc">ลดการตามงานผ่านโทรศัพท์ / Line ได้อย่างมีนัยสำคัญ</div></div>
+          <div class="benefit-card"><div class="bc-icon">👁️</div><div class="bc-title">ผู้บริหารเห็นภาพรวม</div><div class="bc-desc">Dashboard ตอบทุกคำถามได้ทันที ไม่ต้องถามทีม</div></div>
+          <div class="benefit-card"><div class="bc-icon">🧾</div><div class="bc-title">ลดวางบิลล่าช้า</div><div class="bc-desc">รู้ทันทีว่างวดไหนถึง Milestone พร้อมวางบิล</div></div>
+          <div class="benefit-card"><div class="bc-icon">🔍</div><div class="bc-title">ตรวจสอบย้อนหลัง</div><div class="bc-desc">บันทึกทุก Action พร้อม Timestamp ตรวจสอบได้</div></div>
+          <div class="benefit-card"><div class="bc-icon">📈</div><div class="bc-title">รองรับการเติบโต</div><div class="bc-desc">ระบบ Scale ได้ตาม Project ที่เพิ่มขึ้นในอนาคต</div></div>
+          <div class="benefit-card"><div class="bc-icon">🤖</div><div class="bc-title">AI พร้อมเสริมทีม</div><div class="bc-desc">ขยายสู่ AI Automation ได้ใน Phase ต่อไป</div></div>
+        </div>
+
+        <div class="closing-box">
+          ระบบนี้จะเปลี่ยนจาก <span style="color:var(--danger);">"การตามงานด้วยคน"</span> เป็น <span style="color:var(--accent-2);">"การบริหารงานด้วยข้อมูลกลางแบบ Real-Time"</span>
+          <br/><span style="font-size:12.5px;font-weight:400;color:var(--text-muted);margin-top:4px;display:block;">ไม่ต้องลงทุนทั้งหมดพร้อมกัน — ทำทีละ Phase ได้เลย</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Navigation Bar -->
+<div id="nav-bar">
+  <button class="nav-btn" id="btn-prev">&#8249;</button>
+  <div class="nav-dots" id="dots"></div>
+  <div id="slide-counter">1 / 11</div>
+  <button class="nav-btn" id="btn-next">&#8250;</button>
+</div>
+
+<script>
+  const totalSlides = 11;
+  let current = 0;
+
+  const track = document.getElementById('track');
+  const dotsWrap = document.getElementById('dots');
+  const counter = document.getElementById('slide-counter');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  for (let i = 0; i < totalSlides; i++) {
+    const d = document.createElement('div');
+    d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(d);
+  }
+
+  function goTo(n) {
+    if (n < 0 || n >= totalSlides) return;
+    current = n;
+    track.style.transform = 'translateX(-' + (current * 1280) + 'px)';
+    counter.textContent = (current + 1) + ' / ' + totalSlides;
+    document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  btnPrev.addEventListener('click', () => goTo(current - 1));
+  btnNext.addEventListener('click', () => goTo(current + 1));
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End') goTo(totalSlides - 1);
+  });
+
+  document.getElementById('fs-btn').addEventListener('click', function() {
+    if (!document.fullscreenElement) { document.documentElement.requestFullscreen(); }
+    else { document.exitFullscreen(); }
+  });
+
+  function scaleSlides() {
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var scale = Math.min(vw / 1280, vh / 720) * 0.94;
+    document.getElementById('slide-viewport').style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', scaleSlides);
+  scaleSlides();
+
+  // Touch swipe
+  var startX = 0;
+  var vp = document.getElementById('slide-viewport');
+  vp.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; });
+  vp.addEventListener('touchend', function(e) {
+    var diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? goTo(current + 1) : goTo(current - 1); }
+  });
+</script>
+</body>
+</html>
