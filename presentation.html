@@ -492,6 +492,422 @@
       z-index: 100; backdrop-filter: blur(12px); transition: all 0.2s;
     }
     #fs-btn:hover { background: var(--accent); color: white; }
+
+    /* =========================================================
+       RESPONSIVE DESIGN: TABLET & MOBILE VIEWS
+       ========================================================= */
+
+    @media (max-width: 1024px) {
+      body {
+        overflow: hidden;
+      }
+
+      #pres-shell {
+        align-items: stretch;
+        justify-content: stretch;
+      }
+
+      #slide-viewport {
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .slide {
+        padding: 36px 28px 90px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Slide Header */
+      .slide-header {
+        margin-bottom: 20px;
+      }
+      .slide-title {
+        font-size: 26px;
+      }
+
+      /* Slide 1: Title */
+      #slide-1 {
+        padding: 40px 28px 90px;
+        justify-content: center;
+      }
+      #slide-1 h1 {
+        font-size: 38px;
+        max-width: 100%;
+      }
+      .subtitle-thai {
+        font-size: 16px;
+        max-width: 100%;
+        margin-bottom: 24px;
+      }
+      .hero-glow {
+        width: 400px;
+        height: 400px;
+        top: -100px;
+        right: -80px;
+      }
+      .hexagon-grid {
+        display: none;
+      }
+      .company-logo {
+        position: static;
+        margin-top: 24px;
+        align-items: flex-start;
+      }
+
+      /* Slide 2: Pain Points */
+      .pain-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      /* Slide 3: Concept */
+      .concept-body {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .flow-chain {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .flow-arrow {
+        display: none;
+      }
+      .flow-step-inner {
+        padding: 8px 12px;
+      }
+
+      /* Slide 4: Overall Flow */
+      #slide-4 .flow-row, .flow-bottom-row {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .flow-arrow-h {
+        display: none;
+      }
+      .flow-box {
+        width: calc(33.33% - 8px);
+        min-height: 74px;
+        padding: 10px 8px;
+      }
+      #slide-4 .km-wrap {
+        margin-top: 16px;
+      }
+
+      /* Slide 5: Modules */
+      .module-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      /* Slide 6: Access Channels */
+      .channel-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .channel-card:last-child {
+        grid-column: span 2;
+      }
+
+      /* Slide 7: PO Progress */
+      .po-card {
+        padding: 18px 20px;
+      }
+      .po-info-row {
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+      .pr-label {
+        width: 140px;
+      }
+
+      /* Slide 8: Dashboard */
+      .dash-body {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .dash-q-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+
+      /* Slide 9: AI */
+      .ai-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      /* Slide 10: Roadmap */
+      .roadmap-track {
+        gap: 10px;
+      }
+      .phase-card {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 14px 16px;
+      }
+
+      /* Slide 11: Benefits */
+      .benefit-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .closing-box {
+        font-size: 14px;
+        padding: 14px 20px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .slide {
+        padding: 24px 16px 84px;
+      }
+
+      /* Header */
+      .slide-header {
+        margin-bottom: 14px;
+      }
+      .slide-title {
+        font-size: 21px;
+      }
+      .slide-tag {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+      }
+      .slide-num {
+        font-size: 11px;
+      }
+
+      /* Slide 1: Title */
+      #slide-1 {
+        padding: 28px 16px 84px;
+      }
+      #slide-1 h1 {
+        font-size: 28px;
+      }
+      .subtitle-thai {
+        font-size: 13.5px;
+        margin-bottom: 20px;
+      }
+      .pill-row {
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .pill {
+        padding: 7px 12px;
+        font-size: 12px;
+      }
+
+      /* Key Message */
+      .key-message {
+        padding: 10px 14px;
+        font-size: 12px;
+        gap: 8px;
+      }
+      .key-message .km-icon {
+        font-size: 18px;
+      }
+
+      /* Slide 2: Pain Points */
+      .pain-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .pain-card {
+        padding: 12px;
+      }
+      .pain-text {
+        font-size: 12px;
+      }
+
+      /* Slide 3: Concept */
+      .flow-chain {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .features-box {
+        padding: 14px;
+      }
+      .feature-item {
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+
+      /* Slide 4: Overall Flow */
+      .flow-box {
+        width: calc(50% - 6px);
+        min-height: 70px;
+        padding: 8px 6px;
+      }
+      .flow-box .fb-icon {
+        font-size: 17px;
+      }
+      .flow-box .fb-label {
+        font-size: 10.5px;
+      }
+      .flow-box .fb-sub {
+        font-size: 9px;
+      }
+
+      /* Slide 5: Modules */
+      .module-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      /* Slide 6: Access Channels */
+      .channel-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .channel-card:last-child {
+        grid-column: span 1;
+      }
+
+      /* Slide 7: PO Progress */
+      .po-card {
+        padding: 14px;
+      }
+      .po-id {
+        font-size: 16px;
+      }
+      .po-info-row {
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 14px;
+      }
+      .progress-row {
+        gap: 8px;
+      }
+      .pr-label {
+        width: 110px;
+        font-size: 11.5px;
+      }
+      .pr-pct {
+        font-size: 11.5px;
+        width: 34px;
+      }
+      .total-val {
+        font-size: 20px;
+      }
+      .status-chip {
+        font-size: 11px;
+        padding: 5px 10px;
+      }
+
+      /* Slide 8: Dashboard */
+      .dash-body {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      .kpi-card {
+        padding: 10px;
+      }
+      .kpi-icon {
+        font-size: 18px;
+        margin-bottom: 4px;
+      }
+      .kpi-val {
+        font-size: 18px;
+      }
+      .kpi-label {
+        font-size: 10px;
+      }
+      .kpi-trend {
+        font-size: 9.5px;
+      }
+      .dash-q-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .dash-q {
+        font-size: 11.5px;
+        padding: 7px 10px;
+      }
+
+      /* Slide 9: AI */
+      .ai-chat-box {
+        padding: 14px;
+      }
+      .chat-bubble {
+        font-size: 11.5px;
+        padding: 7px 10px;
+      }
+
+      /* Slide 10: Roadmap */
+      .phase-name {
+        font-size: 13.5px;
+      }
+      .phase-tag {
+        font-size: 11px;
+        padding: 4px 8px;
+      }
+
+      /* Slide 11: Benefits */
+      .benefit-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .benefit-card {
+        padding: 10px 12px;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .bc-icon {
+        margin-bottom: 0;
+        font-size: 20px;
+      }
+      .bc-title {
+        font-size: 12.5px;
+        margin-bottom: 2px;
+      }
+      .bc-desc {
+        font-size: 11px;
+      }
+
+      /* Nav Bar */
+      #nav-bar {
+        bottom: 12px;
+        padding: 6px 12px;
+        gap: 8px;
+        max-width: 94vw;
+      }
+      .nav-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+      }
+      .nav-dots {
+        gap: 3px;
+        max-width: 110px;
+        overflow-x: auto;
+      }
+      .nav-dot {
+        width: 4px;
+        height: 4px;
+        flex-shrink: 0;
+      }
+      .nav-dot.active {
+        width: 12px;
+      }
+      #slide-counter {
+        font-size: 10.5px;
+        min-width: 36px;
+      }
+      #fs-btn {
+        top: 10px;
+        right: 10px;
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1067,12 +1483,19 @@
     dotsWrap.appendChild(d);
   }
 
+  function getSlideWidth() {
+    return window.innerWidth <= 1024 ? window.innerWidth : 1280;
+  }
+
   function goTo(n) {
     if (n < 0 || n >= totalSlides) return;
     current = n;
-    track.style.transform = 'translateX(-' + (current * 1280) + 'px)';
+    var w = getSlideWidth();
+    track.style.transform = 'translateX(-' + (current * w) + 'px)';
     counter.textContent = (current + 1) + ' / ' + totalSlides;
     document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    var slides = document.querySelectorAll('.slide');
+    if (slides[current]) slides[current].scrollTop = 0;
   }
 
   btnPrev.addEventListener('click', () => goTo(current - 1));
@@ -1092,20 +1515,57 @@
 
   function scaleSlides() {
     var vw = window.innerWidth, vh = window.innerHeight;
-    var scale = Math.min(vw / 1280, vh / 720) * 0.94;
-    document.getElementById('slide-viewport').style.transform = 'scale(' + scale + ')';
+    var vp = document.getElementById('slide-viewport');
+    var slides = document.querySelectorAll('.slide');
+
+    if (vw <= 1024) {
+      vp.style.transform = 'none';
+      vp.style.width = '100vw';
+      vp.style.height = '100vh';
+      track.style.width = (vw * totalSlides) + 'px';
+      track.style.height = '100vh';
+      slides.forEach(function(s) {
+        s.style.width = vw + 'px';
+        s.style.height = '100vh';
+      });
+      track.style.transform = 'translateX(-' + (current * vw) + 'px)';
+    } else {
+      vp.style.width = '1280px';
+      vp.style.height = '720px';
+      track.style.width = 'calc(1280px * ' + totalSlides + ')';
+      track.style.height = '720px';
+      slides.forEach(function(s) {
+        s.style.width = '1280px';
+        s.style.height = '720px';
+      });
+      var scale = Math.min(vw / 1280, vh / 720) * 0.94;
+      vp.style.transform = 'scale(' + scale + ')';
+      track.style.transform = 'translateX(-' + (current * 1280) + 'px)';
+    }
   }
+
   window.addEventListener('resize', scaleSlides);
+  window.addEventListener('orientationchange', function() {
+    setTimeout(scaleSlides, 150);
+  });
   scaleSlides();
 
-  // Touch swipe
-  var startX = 0;
+  // Smart touch swipe
+  var startX = 0, startY = 0;
   var vp = document.getElementById('slide-viewport');
-  vp.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; });
+  vp.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
   vp.addEventListener('touchend', function(e) {
-    var diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) { diff > 0 ? goTo(current + 1) : goTo(current - 1); }
-  });
+    var diffX = startX - e.changedTouches[0].clientX;
+    var diffY = startY - e.changedTouches[0].clientY;
+    // Only swipe if horizontal motion is significantly larger than vertical scroll
+    if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.25) {
+      diffX > 0 ? goTo(current + 1) : goTo(current - 1);
+    }
+  }, { passive: true });
 </script>
 </body>
 </html>
